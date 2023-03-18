@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Pillars Element 11 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1073906645987656, guid: 0e70a9941e0b4ec438e3f06fc4facd22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4234120412219142, guid: 0e70a9941e0b4ec438e3f06fc4facd22, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -157,7 +161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4234120412219142, guid: 0e70a9941e0b4ec438e3f06fc4facd22, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.618157
+      value: -8.868157
       objectReference: {fileID: 0}
     - target: {fileID: 4234120412219142, guid: 0e70a9941e0b4ec438e3f06fc4facd22, type: 3}
       propertyPath: m_LocalRotation.w
@@ -202,6 +206,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Pillars Element 5 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1512526815000544, guid: 704b4d82cd5c2d743b532e151cfbdd43, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4296562232126276, guid: 704b4d82cd5c2d743b532e151cfbdd43, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -224,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4296562232126276, guid: 704b4d82cd5c2d743b532e151cfbdd43, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.7770815
+      value: -9.0270815
       objectReference: {fileID: 0}
     - target: {fileID: 4296562232126276, guid: 704b4d82cd5c2d743b532e151cfbdd43, type: 3}
       propertyPath: m_LocalRotation.w
@@ -324,6 +332,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Pillars Element 9 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1894239683639878, guid: a5df68ea43042e749af4ea6592a504ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4725320730752848, guid: a5df68ea43042e749af4ea6592a504ce, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -346,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4725320730752848, guid: a5df68ea43042e749af4ea6592a504ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.692941
+      value: -8.942941
       objectReference: {fileID: 0}
     - target: {fileID: 4725320730752848, guid: a5df68ea43042e749af4ea6592a504ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -505,6 +517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Pillars Element 8 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1268103648333808, guid: e13fab2df4718384091479d9973186d1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4622898536891128, guid: e13fab2df4718384091479d9973186d1, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -527,7 +543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622898536891128, guid: e13fab2df4718384091479d9973186d1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.82
+      value: -9.07
       objectReference: {fileID: 0}
     - target: {fileID: 4622898536891128, guid: e13fab2df4718384091479d9973186d1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1406,23 +1422,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.2459094
+      value: -0.2628547
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.12801838
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9692928
+      value: 0.8597585
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.41872916
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -40.746
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 928.471
+      value: 947.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -35.529
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 4794d27ad6b98f941b6d8699b9f5d2b9, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1792,8 +1816,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 16.94
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1816,14 +1840,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784174915}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 29.3, z: -17.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!1001 &873810269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2931,6 +2955,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Pillars Element 6 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1765281930367708, guid: b1b305a0406a3a94092c20063bfd9b1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4394582298712778, guid: b1b305a0406a3a94092c20063bfd9b1e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2953,7 +2981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4394582298712778, guid: b1b305a0406a3a94092c20063bfd9b1e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.698098
+      value: -8.948098
       objectReference: {fileID: 0}
     - target: {fileID: 4394582298712778, guid: b1b305a0406a3a94092c20063bfd9b1e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3830,6 +3858,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Pillars Element 16 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1432860344677402, guid: 4de21084b9012c1449507cca2e233fa6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4246185740299254, guid: 4de21084b9012c1449507cca2e233fa6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3852,7 +3884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4246185740299254, guid: 4de21084b9012c1449507cca2e233fa6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.541509
+      value: -8.791509
       objectReference: {fileID: 0}
     - target: {fileID: 4246185740299254, guid: 4de21084b9012c1449507cca2e233fa6, type: 3}
       propertyPath: m_LocalRotation.w

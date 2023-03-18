@@ -40,7 +40,7 @@ namespace Infrastructure.States{
     }
 
     private void InitWorld(){
-      //GameObject host = _gameFactory.CreatePerson(GameObject.FindWithTag(InitialPointTag));
+      _gameFactory.CreateMatrixCell();
     }
   }
 }

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using GameElements;
 using Infrastructure.AssetManagement;
 using Services.PersistentProgress;
 using UnityEngine;
 
 namespace Infrastructure.Factory{
   public class GameFactory : IGameFactory{
+    private const int NumCell = 64;
     private readonly IAsset _asset;
-
     public List<ISaveProgressReader> ProgressReaders{get;} = new();    
     public List<ISaveProgress> ProgressesWriters{get;} = new();
     
@@ -19,8 +20,21 @@ namespace Infrastructure.Factory{
       ProgressesWriters.Clear();
     }
 
-    public GameObject CreatePerson(GameObject _at) => InstantiateRegistered(AssetPath.HostPath, _at.transform.position);
+    public GameObject Create(GameObject _at, string _path) => InstantiateRegistered(_path, _at.transform.position);
 
+    public void CreateMatrixCell(){
+      for(var i = 0; i < NumCell; i++){
+        if((i / 2) % 1 == 0){
+          InstantiateRegistered(AssetPath.BlackCellPath).GetComponent<CellIdentity>().Construct(i);
+          Debug.LogError("AssetPath.BlackCellPath   " + i);
+          continue;
+        }
+        
+        Debug.LogError("AssetPath.WhiteCellPath   " + i);
+        InstantiateRegistered(AssetPath.WhiteCellPath).GetComponent<CellIdentity>().Construct(i);
+      }
+    }
+    
     private GameObject InstantiateRegistered(string _prefabPath, Vector3 _at){
       GameObject gameObject = _asset.Instantiate(_prefabPath, _at);
       RegisterProgressWatcher(gameObject);
