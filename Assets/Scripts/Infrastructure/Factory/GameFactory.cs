@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using GameElements;
 using Infrastructure.AssetManagement;
@@ -60,6 +59,12 @@ namespace Infrastructure.Factory{
     }
 
     private GameObject InstantiateRegistered(string _prefabPath){
+      var cell = CreateCell(_prefabPath);
+      RegisterProgressWatcher(cell);
+      return cell;
+    }
+
+    private GameObject CreateCell(string _prefabPath){
       var randomCell = Random.Range(0, 32);      
       var randomCellRotation = Random.Range(0, 4);
       
@@ -69,7 +74,6 @@ namespace Infrastructure.Factory{
         = _asset.Instantiate(gameObject.GmCell[randomCell], Vector3.zero, Quaternion.Euler(0,90 * randomCellRotation,0));
 
       meshCell.transform.parent = cell.transform;
-      RegisterProgressWatcher(cell);
       return cell;
     }
 

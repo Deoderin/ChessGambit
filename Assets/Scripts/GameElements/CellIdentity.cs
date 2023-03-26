@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GameElements{
   public class CellIdentity : MonoBehaviour{
