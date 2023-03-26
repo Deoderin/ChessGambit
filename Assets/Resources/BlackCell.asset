@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: BlackCell
   m_EditorClassIdentifier: Assembly-CSharp:Infrastructure.AssetManagement:CellPasses
-  cellColor: 0
-  gmCell:
+  CellColor: 0
+  GmCell:
   - {fileID: 4944980832014708339, guid: 6c902a1c48e7aed40bf4cd1ed9e71801, type: 3}
   - {fileID: 2008428226529854519, guid: 3d7cd0eeb4c796c409270783ee53dbae, type: 3}
   - {fileID: 378956544809117127, guid: dad5546b231fee74f9c5e8afa0dfe346, type: 3}

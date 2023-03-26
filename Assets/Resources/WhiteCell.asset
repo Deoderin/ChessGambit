@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be101f069964d188984204eab0c24f1, type: 3}
   m_Name: WhiteCell
   m_EditorClassIdentifier: 
-  cellColor: 1
-  gmCell:
+  CellColor: 1
+  GmCell:
   - {fileID: 6095710084392832001, guid: 8af25cdd12bf05944aae2bbf509314f9, type: 3}
   - {fileID: 7171059814210720129, guid: 60565a894e00bfa4bb2fe9e456215713, type: 3}
   - {fileID: 1019799981371086474, guid: 109b00f9d1a751f4db1ee11543f81ab4, type: 3}
