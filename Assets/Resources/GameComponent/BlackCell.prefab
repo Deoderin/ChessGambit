@@ -149,7 +149,7 @@ PrefabInstance:
     - target: {fileID: 6180864691172447656, guid: 082f796485d3f6143a836178d4977750,
         type: 3}
       propertyPath: m_Name
-      value: BlackCell Variant
+      value: BlackCell
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

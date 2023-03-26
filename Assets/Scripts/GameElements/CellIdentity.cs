@@ -3,8 +3,7 @@ using UnityEngine.Serialization;
 
 namespace GameElements{
   public class CellIdentity : MonoBehaviour{
-    public void Construct(int _id, CellColor _cellColor){
-      this.GetId = _id;
+    public void Construct(CellColor _cellColor){
       this.cellColor = _cellColor;
     }
 
@@ -13,7 +12,7 @@ namespace GameElements{
   }
 
   public enum CellColor{
-    Black,
-    White
+    Black = 0,
+    White = 1
   }
 }

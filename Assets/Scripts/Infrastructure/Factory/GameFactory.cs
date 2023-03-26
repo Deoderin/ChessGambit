@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using GameElements;
 using Infrastructure.AssetManagement;
+using Logic;
 using Services.PersistentProgress;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Infrastructure.Factory{
   public class GameFactory : IGameFactory{
-    private const int NumCell = 64;
     private readonly IAsset _asset;
     private List<GameObject> _cells = new List<GameObject>();
     public List<ISaveProgressReader> ProgressReaders{get;} = new();    
@@ -24,25 +26,33 @@ namespace Infrastructure.Factory{
     public GameObject Create(GameObject _at, string _path) => InstantiateRegistered(_path, _at.transform.position);
 
     public void CreateMatrixCell(){
+      ChessBoardService.InitialCellsBoard();
       GenerateCells();
     }
 
     private void GenerateCells(){
-      for(var i = 0; i < NumCell; i++){
-        if(i % 2 == 0){
-          InitCell(InstantiateRegistered(AssetPath.BlackCellPath), i);
-          continue;
+      for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+          var colorCell = ChessBoardService.CellBoard[i, j] == 0 ? CellColor.Black : CellColor.White;
+          var cell = InstantiateRegistered(colorCell == CellColor.Black ? AssetPath.BlackCellPathData : AssetPath.WhiteCellPathData);
+          
+          SetupPositionCell(cell, i, j);
+          _cells.Add(cell);
         }
-
-        InitCell(InstantiateRegistered(AssetPath.WhiteCellPath), i);
       }
     }
 
-    private void InitCell(GameObject _cell, int _i){
-      _cell.GetComponent<CellIdentity>().Construct(_i, CellColor.Black);
-      _cells.Add(_cell);
+    private void SetupPositionCell(GameObject _cell, int _x, int _y){
+      const float startUpPos = 40;
+      const float positionOffset = 2;
+      
+      Vector3 positionOnBoard = new Vector3(_x * positionOffset, startUpPos, _y * positionOffset);
+      var animationCellComponent = _cell.GetComponent<AnimationCell>();
+      
+      animationCellComponent.InitPosition(positionOnBoard);
+      animationCellComponent.MoveStartPosition();
     }
-    
+
     private GameObject InstantiateRegistered(string _prefabPath, Vector3 _at){
       GameObject gameObject = _asset.Instantiate(_prefabPath, _at);
       RegisterProgressWatcher(gameObject);
@@ -50,9 +60,17 @@ namespace Infrastructure.Factory{
     }
 
     private GameObject InstantiateRegistered(string _prefabPath){
-      GameObject gameObject = _asset.Instantiate(_prefabPath);
-      RegisterProgressWatcher(gameObject);
-      return gameObject;
+      var randomCell = Random.Range(0, 32);      
+      var randomCellRotation = Random.Range(0, 4);
+      
+      var gameObject = (CellPasses)_asset.InstantiateData(_prefabPath);
+      var cell = _asset.Instantiate(AssetPath.CellPath);
+      var meshCell
+        = _asset.Instantiate(gameObject.GmCell[randomCell], Vector3.zero, Quaternion.Euler(0,90 * randomCellRotation,0));
+
+      meshCell.transform.parent = cell.transform;
+      RegisterProgressWatcher(cell);
+      return cell;
     }
 
     private void RegisterProgressWatcher(GameObject _gameObject){
