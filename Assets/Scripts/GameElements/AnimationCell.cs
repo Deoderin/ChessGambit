@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Data;
 using DG.Tweening;
@@ -18,6 +17,7 @@ namespace GameElements{
           MoveStartPosition();
           break;
         case TypeAnimationCell.ScaleUpOnSpot:
+          HeightPos(_animSetting.spotPosition);
           InitScale(Vector3.zero);
           ScaleUp();
           break;
