@@ -1,38 +1,63 @@
+using System;
 using System.Collections;
+using Data;
 using DG.Tweening;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace GameElements{
   public class AnimationCell : MonoBehaviour{
-    [SerializeField]
-    private Ease animationType;
-    [SerializeField, MinMaxSlider(0, 2, true)]
-    private Vector2 delayRange;
-    private const float InitPos = 1.6f;    
-    private const float DropDown = -10f;
-    private const float AnimTime = 1f;
+    private CallAnimationSetting _animSetting;
     
-    public void InitPosition(Vector3 _pos) => transform.position = _pos;
-    public void InitScale(Vector3 _scale) => transform.localScale = _scale;
+    public void SetDataSetting(CallAnimationSetting _setting) => _animSetting = _setting;
 
-    public void MoveDropDown() => transform.DOMoveY(DropDown, AnimTime).SetEase(animationType);
+    public void StartUpAnimation(){
+      switch(_animSetting.typeAnimationCell){
+        case TypeAnimationCell.FallFromAbove:
+          HeightPos(_animSetting.startUpPos);
+          MoveStartPosition();
+          break;
+        case TypeAnimationCell.ScaleUpOnSpot:
+          InitScale(Vector3.zero);
+          ScaleUp();
+          break;
+        case TypeAnimationCell.AllTypesAnimation:
+          InitScale(Vector3.zero);
+          HeightPos(_animSetting.startUpPos);
+          ScaleUp();
+          MoveStartPosition();
+          break;
+      }
+    }
 
-    public void ScaleUp() => StartCoroutine(ScaleStartDelay());
-    
-    public void MoveStartPosition() => StartCoroutine(MoveStartPositionDelay());
+    public void MoveDropDown()
+      => transform
+        .DOMoveY(_animSetting.dropDownPosition, _animSetting.baseMoveAnimTime)
+        .SetEase(_animSetting.animationTypeEase);
+
+    private void InitScale(Vector3 _scale) => transform.localScale = _scale;
+
+    private void HeightPos(float _posY) =>
+      transform.position = new Vector3(transform.position.x, _posY, transform.position.z);
+
+    private void ScaleUp(){
+      StartCoroutine(ScaleStartDelay());
+    }
+
+    private void MoveStartPosition(){
+      StartCoroutine(MoveStartPositionDelay());
+    }
 
     private IEnumerator MoveStartPositionDelay(){
-      var delay = Random.Range(delayRange.x, delayRange.y);
+      var delay = Random.Range(_animSetting.delayRange.x, _animSetting.delayRange.y);
       yield return new WaitForSeconds(delay);
-      transform.DOMoveY(InitPos, AnimTime).SetEase(animationType);;
+      transform.DOMoveY(_animSetting.spotPosition, _animSetting.baseMoveAnimTime).SetEase(_animSetting.animationTypeEase);
     }
-    
+
     private IEnumerator ScaleStartDelay(){
-      var delay = Random.Range(delayRange.x, delayRange.y);
+      var delay = Random.Range(_animSetting.delayRange.x, _animSetting.delayRange.y);
       yield return new WaitForSeconds(delay);
-      transform.DOScale(1, AnimTime).SetEase(animationType);;
+      transform.DOScale(1, _animSetting.baseMoveAnimTime).SetEase(_animSetting.animationTypeEase);
     }
   }
 }
