@@ -43,13 +43,15 @@ namespace Infrastructure.Factory{
 
     private void SetupPositionCell(GameObject _cell, int _x, int _y){
       const float startUpPos = 40;
+      const float startUpPosForScaleUp = 1.6f;
       const float positionOffset = 2;
       
-      Vector3 positionOnBoard = new Vector3(_x * positionOffset, startUpPos, _y * positionOffset);
+      Vector3 positionOnBoard = new Vector3(_x * positionOffset, startUpPosForScaleUp, _y * positionOffset);
       var animationCellComponent = _cell.GetComponent<AnimationCell>();
       
       animationCellComponent.InitPosition(positionOnBoard);
-      animationCellComponent.MoveStartPosition();
+      animationCellComponent.InitScale(Vector3.zero);
+      animationCellComponent.ScaleUp();
     }
 
     private GameObject InstantiateRegistered(string _prefabPath, Vector3 _at){

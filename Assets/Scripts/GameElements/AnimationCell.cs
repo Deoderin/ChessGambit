@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -16,15 +15,24 @@ namespace GameElements{
     private const float AnimTime = 1f;
     
     public void InitPosition(Vector3 _pos) => transform.position = _pos;
+    public void InitScale(Vector3 _scale) => transform.localScale = _scale;
 
     public void MoveDropDown() => transform.DOMoveY(DropDown, AnimTime).SetEase(animationType);
 
+    public void ScaleUp() => StartCoroutine(ScaleStartDelay());
+    
     public void MoveStartPosition() => StartCoroutine(MoveStartPositionDelay());
 
     private IEnumerator MoveStartPositionDelay(){
       var delay = Random.Range(delayRange.x, delayRange.y);
       yield return new WaitForSeconds(delay);
       transform.DOMoveY(InitPos, AnimTime).SetEase(animationType);;
+    }
+    
+    private IEnumerator ScaleStartDelay(){
+      var delay = Random.Range(delayRange.x, delayRange.y);
+      yield return new WaitForSeconds(delay);
+      transform.DOScale(1, AnimTime).SetEase(animationType);;
     }
   }
 }

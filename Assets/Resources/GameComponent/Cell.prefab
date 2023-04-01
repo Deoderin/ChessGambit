@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b159b924c5516864d897b001ed17df35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationType: 22
+  animationType: 9
   delayRange: {x: 0.20172921, y: 1.5331411}
 --- !u!114 &7057064308734399347
 MonoBehaviour:
