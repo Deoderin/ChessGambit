@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameElements{
   public class CellIdentity : MonoBehaviour{
-    public void Construct(CellColor _cellColor){
-      this.cellColor = _cellColor;
+    public void Construct(ColorSide _colorSide){
+      this.colorSide = _colorSide;
     }
 
     public int GetId{get;private set;}
-    public CellColor cellColor;
+    [FormerlySerializedAs("cellColor")] public ColorSide colorSide;
   }
 
-  public enum CellColor{
+  public enum ColorSide{
     Black = 0,
     White = 1
   }

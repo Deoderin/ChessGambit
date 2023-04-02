@@ -15,6 +15,6 @@ namespace Logic{
 
         reverseCount = !reverseCount;
       }
-    } 
+    }
   }
 }

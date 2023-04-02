@@ -1,14 +1,14 @@
 using System.Collections;
-using Data;
+using Data.Setting;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace GameElements{
   public class AnimationCell : MonoBehaviour{
-    private CallAnimationSetting _animSetting;
+    private CellAnimationSetting _animSetting;
     
-    public void SetDataSetting(CallAnimationSetting _setting) => _animSetting = _setting;
+    public void SetDataSetting(CellAnimationSetting _setting) => _animSetting = _setting;
 
     public void StartUpAnimation(){
       switch(_animSetting.typeAnimationCell){

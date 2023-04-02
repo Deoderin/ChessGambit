@@ -2,9 +2,9 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Data{
-  [CreateAssetMenu(menuName = "CallAnimationSetting", fileName = "CallAnimationSetting", order = 0)]
-  public class CallAnimationSetting : ScriptableObject{
+namespace Data.Setting{
+  [CreateAssetMenu(menuName = "CellAnimationSetting", fileName = "CellAnimationSetting", order = 0)]
+  public class CellAnimationSetting : ScriptableObject{
     public TypeAnimationCell typeAnimationCell;
     public Ease animationTypeEase;
     [MinMaxSlider(0, 2, true)]

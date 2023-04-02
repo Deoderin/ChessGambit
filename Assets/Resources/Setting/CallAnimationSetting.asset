@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ff84fd4c634c1e9365b810d03f5a5e, type: 3}
   m_Name: CallAnimationSetting
   m_EditorClassIdentifier: 
-  typeAnimationCell: 0
-  animationTypeEase: 0
-  delayRange: {x: 0, y: 0}
+  typeAnimationCell: 1
+  animationTypeEase: 9
+  delayRange: {x: 0.2017292, y: 1.533141}
+  dropDownPosition: -10
+  baseMoveAnimTime: 1
+  startUpPos: 40
+  spotPosition: 1.6

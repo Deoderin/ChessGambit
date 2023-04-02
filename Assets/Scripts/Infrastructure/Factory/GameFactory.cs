@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Common.Extensions;
 using Data;
+using Data.Setting;
 using GameElements;
 using Infrastructure.AssetManagement;
 using Logic;
@@ -34,8 +35,8 @@ namespace Infrastructure.Factory{
     private void GenerateCells(){
       for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
-          var colorCell = ChessBoardService.CellBoard[i, j] == 0 ? CellColor.Black : CellColor.White;
-          var cell = InstantiateRegistered(colorCell == CellColor.Black ? AssetPath.BlackCellPathData : AssetPath.WhiteCellPathData);
+          var colorCell = ChessBoardService.CellBoard[i, j] == 0 ? ColorSide.Black : ColorSide.White;
+          var cell = InstantiateRegistered(colorCell == ColorSide.Black ? AssetPath.BlackCellPathData : AssetPath.WhiteCellPathData);
 
           SetupPositionCell(cell, i, j);
           SetupAnimationComponent(cell);
@@ -50,7 +51,7 @@ namespace Infrastructure.Factory{
     }
 
     private void SetupAnimationComponent(GameObject _cell){
-      var animSetting = LoadSettingData<CallAnimationSetting>(AssetPath.SettingAnimationCell);
+      var animSetting = LoadSettingData<CellAnimationSetting>(AssetPath.SettingAnimationCell);
 
       _cell.GetComponent<AnimationCell>()
            .With(_aCell => _aCell.SetDataSetting(animSetting))
