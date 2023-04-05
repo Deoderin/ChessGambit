@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InitialPoint
   - Chess
+  - Cell
   layers:
   - Default
   - TransparentFX

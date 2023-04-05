@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2908182594072118342}
   - component: {fileID: 8541322514165657369}
-  - component: {fileID: 2322829803426930019}
+  - component: {fileID: 8850080891190684966}
+  - component: {fileID: 2035711309458698099}
   m_Layer: 0
   m_Name: ChessPiece
   m_TagString: Chess
@@ -48,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChessType: 0
   ChessColor: 0
---- !u!114 &2322829803426930019
+--- !u!114 &8850080891190684966
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,12 +58,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2908182594072118343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a0849349074fc794eb59ae83361eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fa9bf1c7ba6427daf973017b92cb4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 128
+--- !u!114 &2035711309458698099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908182594072118343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a946b2ab32c142a1b50b66188c768058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4151774485813726073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,15 +95,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4323368450248646, guid: 9ddda65c1c1654147bbbdbdfcdb4881f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4323368450248646, guid: 9ddda65c1c1654147bbbdbdfcdb4881f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.88
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4323368450248646, guid: 9ddda65c1c1654147bbbdbdfcdb4881f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4323368450248646, guid: 9ddda65c1c1654147bbbdbdfcdb4881f, type: 3}
       propertyPath: m_LocalRotation.w
