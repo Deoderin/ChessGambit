@@ -6,9 +6,10 @@ using UnityEngine;
 namespace Infrastructure.Factory{
   public interface IGameFactory : IService{
     GameObject Create(GameObject _at, string _path);
-    void CreateMatrixCell();
     List<ISaveProgressReader> ProgressReaders{get;}
     List<ISaveProgress> ProgressesWriters{get;}
     void Cleanup();
+    
+    void CreateMatrixCell();
   }
 } 

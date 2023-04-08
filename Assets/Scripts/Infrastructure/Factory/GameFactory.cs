@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Common.Extensions;
-using Data;
 using Data.Setting;
 using GameElements;
 using Infrastructure.AssetManagement;
@@ -12,12 +11,14 @@ using Random = UnityEngine.Random;
 namespace Infrastructure.Factory{
   public class GameFactory : IGameFactory{
     private readonly IAsset _asset;
-    private List<GameObject> _cells = new List<GameObject>();
+    private readonly IBoardServices _boardServices;
+    private Dictionary<Vector2Int, GameObject> _cells = new();
     public List<ISaveProgressReader> ProgressReaders{get;} = new();    
     public List<ISaveProgress> ProgressesWriters{get;} = new();
     
-    public GameFactory(IAsset _asset){
+    public GameFactory(IAsset _asset, IBoardServices _boardServices){
       this._asset = _asset;
+      this._boardServices = _boardServices;
     }
 
     public void Cleanup(){
@@ -28,19 +29,21 @@ namespace Infrastructure.Factory{
     public GameObject Create(GameObject _at, string _path) => InstantiateRegistered(_path, _at.transform.position);
 
     public void CreateMatrixCell(){
-      ChessBoardService.InitialCellsBoard();
       GenerateCells();
     }
 
     private void GenerateCells(){
-      for(int i = 0; i < 8; i++){
-        for(int j = 0; j < 8; j++){
-          var colorCell = ChessBoardService.CellBoard[i, j] == 0 ? ColorSide.Black : ColorSide.White;
+      var cells = _boardServices.InitialCellsColors();
+      
+      for(int x = 0; x < 8; x++){
+        for(int y = 0; y < 8; y++){
+          var colorCell =  cells[x, y] == 0 ? ColorSide.Black : ColorSide.White;
           var cell = InstantiateRegistered(colorCell == ColorSide.Black ? AssetPath.BlackCellPathData : AssetPath.WhiteCellPathData);
 
-          SetupPositionCell(cell, i, j);
+          SetupPositionCell(cell, x, y);
+          SetIdentityInformation(cell, colorCell, x, y);
           SetupAnimationComponent(cell);
-          _cells.Add(cell);
+          _cells.Add(new Vector2Int(x, y), cell);
         }
       }
     }
@@ -49,6 +52,9 @@ namespace Infrastructure.Factory{
       const float positionOffset = 2;
       _cell.transform.position = new Vector3(_x * positionOffset, 0, _y * positionOffset);
     }
+
+    private void SetIdentityInformation(GameObject _cell,ColorSide _colorCell, int _i, int _j) =>
+      _cell.GetComponent<CellIdentity>().Construct(_colorCell, new Vector2Int(_i, _j));
 
     private void SetupAnimationComponent(GameObject _cell){
       var animSetting = LoadSettingData<CellAnimationSetting>(AssetPath.SettingAnimationCell);

@@ -9,7 +9,7 @@ namespace GameElements{
     }
 
     public void SetPosition(Vector3 _pos){
-      transform.position = _pos;
+      _animator.MoveTo(_pos);
     }
   }
 }

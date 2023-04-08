@@ -1,6 +1,7 @@
 using Infrastructure.AssetManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services;
+using Logic;
 using Services;
 using Services.PersistentProgress;
 using Services.PersistentProgress.SaveLoad;
@@ -36,8 +37,9 @@ namespace Infrastructure.States{
     private void RegisterServices(){
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IAsset>(new AssetProvider());
+      _services.RegisterSingle<IBoardServices>(new ChessBoardService());
       _services.RegisterSingle<IPersistentProgressServices>(new PersistentProgressServices());
-      _services.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAsset>()));
+      _services.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAsset>(), AllServices.Container.Single<IBoardServices>()));
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Container.Single<PersistentProgressServices>(), AllServices.Container.Single<IGameFactory>()));
       _services.RegisterSingle<IInteractableService>(new GetInteractableObject());
     }
