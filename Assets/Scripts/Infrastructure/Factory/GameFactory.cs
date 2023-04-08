@@ -35,14 +35,15 @@ namespace Infrastructure.Factory{
     private void GenerateCells(){
       var cells = _boardServices.InitialCellsColors();
       
-      for(int x = 0; x < 8; x++){
-        for(int y = 0; y < 8; y++){
+      for(int x = 0; x <= IBoardServices.HeightCell; x++){
+        for(int y = 0; y <= IBoardServices.WidthCell; y++){
           var colorCell =  cells[x, y] == 0 ? ColorSide.Black : ColorSide.White;
           var cell = InstantiateRegistered(colorCell == ColorSide.Black ? AssetPath.BlackCellPathData : AssetPath.WhiteCellPathData);
 
           SetupPositionCell(cell, x, y);
           SetIdentityInformation(cell, colorCell, x, y);
           SetupAnimationComponent(cell);
+          SetupOutlineSetting(cell);
           _cells.Add(new Vector2Int(x, y), cell);
         }
       }
@@ -63,6 +64,9 @@ namespace Infrastructure.Factory{
            .With(_aCell => _aCell.SetDataSetting(animSetting))
            .With(_aCell => _aCell.StartUpAnimation());
     }
+
+    private void SetupOutlineSetting(GameObject _cell) => _cell.GetComponent<OutlineCell>().InitPoint();
+    
 
     private GameObject InstantiateRegistered(string _prefabPath, Vector3 _at){
       GameObject gameObject = _asset.Instantiate(_prefabPath, _at);

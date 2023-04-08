@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace Logic{
   public class ChessBoardService : IBoardServices{
-    private const int HeightCell = 7;
-    private const int WidthCell = 7;
-
     public int[,] InitialCellsColors(){
       var reverseCount = true;
       var blackColor = false;
@@ -27,7 +24,7 @@ namespace Logic{
     private List<Vector2Int> AvailableCellForPawn(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
 
-      if(_currentCell.x + 1 < HeightCell)
+      if(_currentCell.x + 1 < IBoardServices.HeightCell)
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y));
 
       return availableCell;
@@ -37,7 +34,7 @@ namespace Logic{
       List<Vector2Int> availableCell = new List<Vector2Int>();
       int counter = 0;
 
-      while(_currentCell.x + counter < HeightCell){
+      while(_currentCell.x + counter < IBoardServices.HeightCell){
         availableCell.Add(new Vector2Int(_currentCell.x + counter, _currentCell.y));
         counter++;
       }
@@ -49,7 +46,7 @@ namespace Logic{
       }
       
       counter = 0;
-      while(_currentCell.y + counter < WidthCell){
+      while(_currentCell.y + counter < IBoardServices.WidthCell){
         availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y + counter));
         counter++;
       }
@@ -67,7 +64,7 @@ namespace Logic{
       List<Vector2Int> availableCell = new List<Vector2Int>();
       int counter = 0;
 
-      while(_currentCell.x + counter < HeightCell && _currentCell.y + counter < WidthCell){
+      while(_currentCell.x + counter < IBoardServices.HeightCell && _currentCell.y + counter < IBoardServices.WidthCell){
         availableCell.Add(new Vector2Int(_currentCell.x + counter, _currentCell.y + counter));
         counter++;
       }
@@ -79,13 +76,13 @@ namespace Logic{
       }
       
       counter = 0;
-      while(_currentCell.x + counter < HeightCell && _currentCell.y - counter > 0){
+      while(_currentCell.x + counter < IBoardServices.HeightCell && _currentCell.y - counter > 0){
         availableCell.Add(new Vector2Int(_currentCell.x + counter, _currentCell.y - counter));
         counter++;
       }
       
       counter = 0;
-      while(_currentCell.x - counter > 0 && _currentCell.y + counter < WidthCell){
+      while(_currentCell.x - counter > 0 && _currentCell.y + counter < IBoardServices.WidthCell){
         availableCell.Add(new Vector2Int(_currentCell.x - counter, _currentCell.y + counter));
         counter++;
       }
@@ -96,28 +93,28 @@ namespace Logic{
     private List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
       
-      if(_currentCell.x + 1 < HeightCell) 
+      if(_currentCell.x + 1 < IBoardServices.HeightCell) 
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y));
       
       if(_currentCell.x - 1 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y));
       
-      if(_currentCell.y + 1 < WidthCell) 
+      if(_currentCell.y + 1 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y + 1));
       
       if(_currentCell.y - 1 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y - 1));
       
-      if(_currentCell.x + 1 < HeightCell && _currentCell.y + 1 < WidthCell) 
+      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y + 1 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y + 1));
       
       if(_currentCell.x - 1 > 0 && _currentCell.y - 1 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y - 1));
       
-      if(_currentCell.x + 1 < HeightCell && _currentCell.y - 1 > 0) 
+      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y - 1 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y - 1));
       
-      if(_currentCell.x - 1 > 0 && _currentCell.y + 1 < WidthCell) 
+      if(_currentCell.x - 1 > 0 && _currentCell.y + 1 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y + 1));
 
       return availableCell;
@@ -135,28 +132,28 @@ namespace Logic{
     private List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
 
-      if(_currentCell.x + 2 < HeightCell && _currentCell.y + 1 < WidthCell) 
+      if(_currentCell.x + 2 < IBoardServices.HeightCell && _currentCell.y + 1 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x + 2, _currentCell.y + 1));
       
       if(_currentCell.x - 2 > 0 && _currentCell.y - 1 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x - 2, _currentCell.y - 1));
       
-      if(_currentCell.x + 2 < HeightCell && _currentCell.y - 1 > 0) 
+      if(_currentCell.x + 2 < IBoardServices.HeightCell && _currentCell.y - 1 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x + 2, _currentCell.y - 1));
       
-      if(_currentCell.x - 2 > 0 && _currentCell.y + 1 < WidthCell) 
+      if(_currentCell.x - 2 > 0 && _currentCell.y + 1 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x - 2, _currentCell.y + 1)); 
       
-      if(_currentCell.x + 1 < HeightCell && _currentCell.y + 2 < WidthCell) 
+      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y + 2 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y + 2));
       
       if(_currentCell.x - 1 > 0 && _currentCell.y - 2 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y - 2));
       
-      if(_currentCell.x + 1 < HeightCell && _currentCell.y - 2 > 0) 
+      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y - 2 > 0) 
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y - 2));
       
-      if(_currentCell.x - 1 > 0 && _currentCell.y + 2 < WidthCell) 
+      if(_currentCell.x - 1 > 0 && _currentCell.y + 2 < IBoardServices.WidthCell) 
         availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y + 2));
 
       return availableCell;
