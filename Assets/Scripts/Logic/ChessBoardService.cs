@@ -21,16 +21,16 @@ namespace Logic{
       return cellBoard;
     }
 
-    private List<Vector2Int> AvailableCellForPawn(Vector2Int _currentCell){
+    public List<Vector2Int> AvailableCellForPawn(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
 
       if(_currentCell.x + 1 < IBoardServices.HeightCell)
         availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y));
 
       return availableCell;
-    }    
-    
-    private List<Vector2Int> AvailableCellForBishop(Vector2Int _currentCell){
+    }
+
+    public List<Vector2Int> AvailableCellForBishop(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
       int counter = 0;
 
@@ -60,7 +60,7 @@ namespace Logic{
       return availableCell;
     }
 
-    private List<Vector2Int> AvailableCellForRock(Vector2Int _currentCell){
+    public List<Vector2Int> AvailableCellForRock(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
       int counter = 0;
 
@@ -88,9 +88,9 @@ namespace Logic{
       }
 
       return availableCell;
-    }     
-    
-    private List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell){
+    }
+
+    public List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
       
       if(_currentCell.x + 1 < IBoardServices.HeightCell) 
@@ -118,18 +118,18 @@ namespace Logic{
         availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y + 1));
 
       return availableCell;
-    }     
-    
-    private List<Vector2Int> AvailableCellForQueen(Vector2Int _currentCell){
+    }
+
+    public List<Vector2Int> AvailableCellForQueen(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
 
       AvailableCellForBishop(_currentCell).ForEach(_a => availableCell.Add(_a));      
       AvailableCellForRock(_currentCell).ForEach(_a => availableCell.Add(_a));
 
       return availableCell;
-    }    
-    
-    private List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell){
+    }
+
+    public List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
 
       if(_currentCell.x + 2 < IBoardServices.HeightCell && _currentCell.y + 1 < IBoardServices.WidthCell) 

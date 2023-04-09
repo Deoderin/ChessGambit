@@ -38,6 +38,7 @@ namespace Infrastructure.States{
 
     private void InitWorld(){
       _gameFactory.CreateMatrixCell();
+      _gameFactory.SpawnChess();
     }
   }
 }

@@ -10,6 +10,10 @@ namespace GameElements{
 
     public void SetPosition(Vector3 _pos){
       _animator.MoveTo(_pos);
+    }    
+    
+    public void SetPosition(Vector2Int _pos){
+      _animator.MoveTo(new Vector3(_pos.x, 0, _pos.y));
     }
   }
 }

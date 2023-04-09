@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common.Extensions;
 using Data.Setting;
@@ -21,6 +22,35 @@ namespace Infrastructure.Factory{
       this._boardServices = _boardServices;
     }
 
+    public List<GameObject> GetAvailableCell(Vector2Int _pos, ChessType _type){
+      var availableCellObj = new List<GameObject>();
+      List<Vector2Int> availableCell = new List<Vector2Int>();
+        
+      switch(_type){
+        case ChessType.King:
+          availableCell = _boardServices.AvailableCellForKing(_pos);
+          break;
+        case ChessType.Rook:
+          availableCell = _boardServices.AvailableCellForRock(_pos);
+          break;
+        case ChessType.Bishop:
+          availableCell = _boardServices.AvailableCellForBishop(_pos);
+          break;
+        case ChessType.Queen:
+          availableCell = _boardServices.AvailableCellForQueen(_pos);
+          break;
+        case ChessType.Knight:
+          availableCell = _boardServices.AvailableCellForKnight(_pos);
+          break;
+        case ChessType.Pawn:
+          availableCell = _boardServices.AvailableCellForPawn(_pos);
+          break;
+      }
+      
+      availableCell.ForEach(_a => availableCellObj.Add(_cells[_a]));
+      return availableCellObj;
+    }
+
     public void Cleanup(){
       ProgressReaders.Clear();
       ProgressesWriters.Clear();
@@ -32,6 +62,28 @@ namespace Infrastructure.Factory{
       GenerateCells();
     }
 
+    public void SpawnChess(){
+      Vector2Int startPosition = Vector2Int.zero;
+      ChessType chessType = ChessType.King;
+      
+      var chess = CreateChessPiece(startPosition);
+      SetupAnimationComponentChess(chess);
+      InitChessSetting(chess, startPosition, chessType);
+    }
+
+    private void SetupAnimationComponentChess(GameObject _chess){
+      _chess.GetComponent<AnimationChess>().StartupAnimation();
+    }
+
+    private GameObject CreateChessPiece(Vector2Int _initialPos) =>
+      _asset.Instantiate(AssetPath.ChessPiecePath, _cells[_initialPos].transform.position);
+
+    private void InitChessSetting(GameObject _chess, Vector2Int _initialPos, ChessType _chessType) =>
+      _chess.GetComponent<Chess>()
+            .With(_a => _a.ChessType = _chessType)
+            .With(_a => _a.PositionInBoard = _initialPos);
+    
+    
     private void GenerateCells(){
       var cells = _boardServices.InitialCellsColors();
       
