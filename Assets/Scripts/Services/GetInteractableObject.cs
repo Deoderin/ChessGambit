@@ -8,7 +8,7 @@ namespace Services{
     public GameObject InteractableObject(string _target) => GetObjectWithScreen(_target);
     
     private static GameObject GetObjectWithScreen(string _target){
-      if(Input.touchCount < 1) return null;
+      if(Input.touchCount != 1) return null;
       
       var point = Input.GetTouch(index: 0).position;
       var ray = Camera.main.ScreenPointToRay(pos: point);

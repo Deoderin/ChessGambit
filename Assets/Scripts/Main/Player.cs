@@ -28,6 +28,7 @@ namespace Main{
         case 1 when !_isTap:
           _isTap = true;
           
+          DisableAvailableCell();
           ChooseCell();
           ChooseFigure();
           ActivateAvailableCell();
@@ -45,12 +46,14 @@ namespace Main{
     }
 
     private void ActivateAvailableCell(){
+      if(_availableCell == null) return;
       foreach(var cell in _availableCell){
         cell.GetComponent<CellIdentity>().EnableAvailableState();
       }
     }
 
     private void DisableAvailableCell(){
+      if(_availableCell == null) return;
       foreach(var cell in _availableCell){
         cell.GetComponent<CellIdentity>().DisableAvailableState();
       }
@@ -64,14 +67,22 @@ namespace Main{
     }
 
     private void SetTargetFigureCell(){
-      if(_availableCell.Count > 0 && _currentFigure != null && _currentCell != null){
+      if(ConditionForMovingFigure()) return;
+      if(!_currentCell.Available) return;
+      
+      _currentFigure.GetComponent<ChessMover>().SetPosition(_currentCell.transform.position);
+      _currentFigure.PositionInBoard = _currentCell.PositionOnBoard;
+      MoveComplete();
+    }
 
-        if(_currentCell.Available){
-          _currentFigure.GetComponent<ChessMover>().SetPosition(_currentCell.transform.position);
-          _currentFigure.PositionInBoard = _currentCell.PositionOnBoard;
-          DisableAvailableCell();
-        }
-      }
+    private bool ConditionForMovingFigure() =>
+      _availableCell is not{Count: > 0} || _currentFigure == null || _currentCell == null;
+
+    private void MoveComplete(){
+      DisableAvailableCell();
+      _currentCell = null;
+      _currentFigure = null;
+      _availableCell = null;
     }
   }
 }
