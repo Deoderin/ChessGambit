@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameElements;
 using Infrastructure.Factory;
 using Infrastructure.Services;
+using Logic;
 using Services;
 using UnityEngine;
 
@@ -12,11 +13,10 @@ namespace Main{
 
     private IInteractableService _interactorService;
     private IGameFactory _gameFactory;
-    private List<GameObject> _availableCell = new();
+    private List<CellIdentity> _availableCell = new();
     private Chess _currentFigure;
     private CellIdentity _currentCell;
     private bool _isTap;
-
 
     private void Start(){
       _interactorService = AllServices.Container.Single<IInteractableService>();
@@ -48,14 +48,14 @@ namespace Main{
     private void ActivateAvailableCell(){
       if(_availableCell == null) return;
       foreach(var cell in _availableCell){
-        cell.GetComponent<CellIdentity>().EnableAvailableState();
+        cell.EnableAvailableState();
       }
     }
 
     private void DisableAvailableCell(){
       if(_availableCell == null) return;
       foreach(var cell in _availableCell){
-        cell.GetComponent<CellIdentity>().DisableAvailableState();
+        cell.DisableAvailableState();
       }
     }
 
@@ -63,15 +63,16 @@ namespace Main{
       if(_interactorService.InteractableObject(TagChess) == null) return;
 
       _currentFigure = _interactorService.InteractableObject(TagChess).GetComponentInParent<Chess>();
-      _availableCell = _gameFactory.GetAvailableCell(_currentFigure.PositionInBoard, _currentFigure.ChessType);
+      _availableCell = _gameFactory.GetAvailableCell(_currentFigure.PositionOnBoard, _currentFigure.ChessType);
     }
 
     private void SetTargetFigureCell(){
       if(ConditionForMovingFigure()) return;
       if(!_currentCell.Available) return;
       
+      _gameFactory.SetEntityCell(_currentFigure.PositionOnBoard).SetChess(null);
       _currentFigure.GetComponent<ChessMover>().SetPosition(_currentCell.transform.position);
-      _currentFigure.PositionInBoard = _currentCell.PositionOnBoard;
+      _currentFigure.PositionOnBoard = _currentCell.PositionOnBoard;
       MoveComplete();
     }
 
@@ -79,6 +80,7 @@ namespace Main{
       _availableCell is not{Count: > 0} || _currentFigure == null || _currentCell == null;
 
     private void MoveComplete(){
+      _gameFactory.SetEntityCell(_currentCell.PositionOnBoard).SetChess(_currentFigure);
       DisableAvailableCell();
       _currentCell = null;
       _currentFigure = null;

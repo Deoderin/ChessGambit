@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Common.Extensions;
 using GameElements;
 using Infrastructure.AssetManagement;
+using Infrastructure.Factory;
+using Infrastructure.Services;
 using UnityEngine;
 
 namespace Logic{
@@ -78,7 +80,10 @@ namespace Logic{
         int y = _currentCell.y + dir[1];
 
         while(x is >= 0 and <= IBoardServices.HeightCell && y is >= 0 and <= IBoardServices.WidthCell){
-          availableCells.Add(new Vector2Int(x, y));
+          var pos = new Vector2Int(x, y);
+          
+          if(ObstacleDetected(pos)) break;
+          availableCells.Add(pos);
           if(_solo) break;
           
           x += dir[0];
@@ -88,5 +93,7 @@ namespace Logic{
 
       return availableCells;
     }
+
+    private bool ObstacleDetected(Vector2Int _pos) => AllServices.Container.Single<IGameFactory>().GetStatusCell(_pos).ThereChess();
   }
 }

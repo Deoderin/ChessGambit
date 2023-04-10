@@ -5,7 +5,7 @@ namespace GameElements{
     public ChessType ChessType;
     public ColorSide ChessColor;
 
-    public Vector2Int PositionInBoard{get;set;}
+    public Vector2Int PositionOnBoard{get;set;}
   }
 
   public enum ChessType{

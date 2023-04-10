@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Common.Extensions;
 using Data.Setting;
@@ -13,17 +12,21 @@ namespace Infrastructure.Factory{
   public class GameFactory : IGameFactory{
     private readonly IAsset _asset;
     private readonly IBoardServices _boardServices;
-    private Dictionary<Vector2Int, GameObject> _cells = new();
+    private Dictionary<Vector2Int, GetCellEntity> _cells = new();
     public List<ISaveProgressReader> ProgressReaders{get;} = new();    
     public List<ISaveProgress> ProgressesWriters{get;} = new();
-    
+
     public GameFactory(IAsset _asset, IBoardServices _boardServices){
       this._asset = _asset;
       this._boardServices = _boardServices;
     }
 
-    public List<GameObject> GetAvailableCell(Vector2Int _pos, ChessType _type){
-      var availableCellObj = new List<GameObject>();
+    public IGetStatus GetStatusCell(Vector2Int _pos) => _cells[_pos];
+    public ISetCellStatus SetEntityCell(Vector2Int _pos) => _cells[_pos];
+    public IGetEntity GetEntityInCell(Vector2Int _pos) => _cells[_pos];
+
+    public List<CellIdentity> GetAvailableCell(Vector2Int _pos, ChessType _type){
+      var availableCellObj = new List<CellIdentity>();
       List<Vector2Int> availableCell = new List<Vector2Int>();
         
       switch(_type){
@@ -47,7 +50,7 @@ namespace Infrastructure.Factory{
           break;
       }
       
-      availableCell.ForEach(_a => availableCellObj.Add(_cells[_a]));
+      availableCell.ForEach(_a => availableCellObj.Add(_cells[_a].GetCell()));
       return availableCellObj;
     }
 
@@ -74,34 +77,40 @@ namespace Infrastructure.Factory{
       var chess = CreateChessPiece(_startPosition);
       SetupAnimationComponentChess(chess);
       InitChessSetting(chess, _startPosition, _chessType);
+      SetStatusCell(_startPosition, chess);
     }
+
+    private void InitChessSetting(GameObject _chess, Vector2Int _initialPos, ChessType _chessType) =>
+      _chess.GetComponent<Chess>()
+            .With(_a => _a.ChessType = _chessType)
+            .With(_a => _a.PositionOnBoard = _initialPos);
 
     private void SetupAnimationComponentChess(GameObject _chess){
       _chess.GetComponent<AnimationChess>().StartupAnimation();
     }
 
-    private GameObject CreateChessPiece(Vector2Int _initialPos) =>
-      _asset.Instantiate(AssetPath.ChessPiecePath, _cells[_initialPos].transform.position);
+    private void SetStatusCell(Vector2Int _startPosition, GameObject _cell){
+      SetEntityCell(_startPosition).SetChess(_cell.GetComponent<Chess>());
+    }
 
-    private void InitChessSetting(GameObject _chess, Vector2Int _initialPos, ChessType _chessType) =>
-      _chess.GetComponent<Chess>()
-            .With(_a => _a.ChessType = _chessType)
-            .With(_a => _a.PositionInBoard = _initialPos);
-    
-    
+    private GameObject CreateChessPiece(Vector2Int _initialPos) =>
+      _asset.Instantiate(AssetPath.ChessPiecePath, _cells[_initialPos].GetCell().transform.position);
+
     private void GenerateCells(){
       var cells = _boardServices.InitialCellsColors();
       
       for(int x = 0; x <= IBoardServices.HeightCell; x++){
         for(int y = 0; y <= IBoardServices.WidthCell; y++){
+          GetCellEntity cellEntity = new GetCellEntity();
           var colorCell =  cells[x, y] == 0 ? ColorSide.Black : ColorSide.White;
           var cell = InstantiateRegistered(colorCell == ColorSide.Black ? AssetPath.BlackCellPathData : AssetPath.WhiteCellPathData);
 
           SetupPositionCell(cell, x, y);
           SetIdentityInformation(cell, colorCell, x, y);
+          SetCellInEntity(cellEntity, cell);
           SetupAnimationComponent(cell);
           SetupOutlineSetting(cell);
-          _cells.Add(new Vector2Int(x, y), cell);
+          _cells.Add(new Vector2Int(x, y), cellEntity);
         }
       }
     }
@@ -114,6 +123,9 @@ namespace Infrastructure.Factory{
     private void SetIdentityInformation(GameObject _cell,ColorSide _colorCell, int _i, int _j) =>
       _cell.GetComponent<CellIdentity>().Construct(_colorCell, new Vector2Int(_i, _j));
 
+    private void SetCellInEntity(GetCellEntity _cellEntity, GameObject _cell) =>
+      _cellEntity.SetCell(_cell.GetComponent<CellIdentity>());
+    
     private void SetupAnimationComponent(GameObject _cell){
       var animSetting = LoadSettingData<CellAnimationSetting>(AssetPath.SettingAnimationCell);
 
