@@ -1,9 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Common.Extensions;
+using GameElements;
+using Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Logic{
   public class ChessBoardService : IBoardServices{
+    private readonly ChessRules _chessRules;
+
+    public ChessBoardService(IAsset _asset){
+      _chessRules = (ChessRules)_asset.InstantiateData(AssetPath.ChessRules);
+    }
+    
     public int[,] InitialCellsColors(){
       var reverseCount = true;
       var blackColor = false;
@@ -17,146 +26,67 @@ namespace Logic{
 
         reverseCount = !reverseCount;
       }
-      
+
       return cellBoard;
     }
 
     public List<Vector2Int> AvailableCellForPawn(Vector2Int _currentCell){
-      List<Vector2Int> availableCell = new List<Vector2Int>();
-
-      if(_currentCell.x + 1 < IBoardServices.HeightCell)
-        availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y));
-
-      return availableCell;
+      var setting = _chessRules.GetSettingChess(ChessType.Pawn);
+      return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
     public List<Vector2Int> AvailableCellForBishop(Vector2Int _currentCell){
-      List<Vector2Int> availableCell = new List<Vector2Int>();
-      int counter = 0;
-
-      while(_currentCell.x + counter < IBoardServices.HeightCell){
-        availableCell.Add(new Vector2Int(_currentCell.x + counter, _currentCell.y));
-        counter++;
-      }
-      
-      counter = 0;
-      while(_currentCell.x - counter > 0){
-        availableCell.Add(new Vector2Int(_currentCell.x - counter, _currentCell.y));
-        counter++;
-      }
-      
-      counter = 0;
-      while(_currentCell.y + counter < IBoardServices.WidthCell){
-        availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y + counter));
-        counter++;
-      }
-      
-      counter = 0;
-      while(_currentCell.y - counter > 0){
-        availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y - counter));
-        counter++;
-      }
-      
-      return availableCell;
+      var setting = _chessRules.GetSettingChess(ChessType.Bishop);
+      return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
     public List<Vector2Int> AvailableCellForRock(Vector2Int _currentCell){
-      List<Vector2Int> availableCell = new List<Vector2Int>();
-      int counter = 0;
-
-      while(_currentCell.x + counter < IBoardServices.HeightCell && _currentCell.y + counter < IBoardServices.WidthCell){
-        availableCell.Add(new Vector2Int(_currentCell.x + counter, _currentCell.y + counter));
-        counter++;
-      }
-      
-      counter = 0;
-      while(_currentCell.x - counter > 0 && _currentCell.y - counter > 0){
-        availableCell.Add(new Vector2Int(_currentCell.x - counter, _currentCell.y - counter));
-        counter++;
-      }
-      
-      counter = 0;
-      while(_currentCell.x + counter < IBoardServices.HeightCell && _currentCell.y - counter > 0){
-        availableCell.Add(new Vector2Int(_currentCell.x + counter, _currentCell.y - counter));
-        counter++;
-      }
-      
-      counter = 0;
-      while(_currentCell.x - counter > 0 && _currentCell.y + counter < IBoardServices.WidthCell){
-        availableCell.Add(new Vector2Int(_currentCell.x - counter, _currentCell.y + counter));
-        counter++;
-      }
-
-      return availableCell;
+      var setting = _chessRules.GetSettingChess(ChessType.Rook);
+      return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
-    public List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell){
+    public List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
-      
-      if(_currentCell.x + 1 < IBoardServices.HeightCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y));
-      
-      if(_currentCell.x - 1 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y));
-      
-      if(_currentCell.y + 1 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y + 1));
-      
-      if(_currentCell.y - 1 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x, _currentCell.y - 1));
-      
-      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y + 1 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y + 1));
-      
-      if(_currentCell.x - 1 > 0 && _currentCell.y - 1 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y - 1));
-      
-      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y - 1 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y - 1));
-      
-      if(_currentCell.x - 1 > 0 && _currentCell.y + 1 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y + 1));
+      var setting = _chessRules.GetSettingChess(ChessType.King);
+
+      Rule(_currentCell, _chessRules.GetSettingChess(ChessType.Bishop)?.direction.ConvertToIntMass(), (bool)setting?.solo).ForEach(_a => availableCell.Add(_a));
+      Rule(_currentCell, _chessRules.GetSettingChess(ChessType.Rook)?.direction.ConvertToIntMass(), (bool)setting?.solo).ForEach(_a => availableCell.Add(_a));
 
       return availableCell;
     }
 
     public List<Vector2Int> AvailableCellForQueen(Vector2Int _currentCell){
       List<Vector2Int> availableCell = new List<Vector2Int>();
+      var setting = _chessRules.GetSettingChess(ChessType.Queen);
 
-      AvailableCellForBishop(_currentCell).ForEach(_a => availableCell.Add(_a));      
-      AvailableCellForRock(_currentCell).ForEach(_a => availableCell.Add(_a));
+      Rule(_currentCell, _chessRules.GetSettingChess(ChessType.Bishop)?.direction.ConvertToIntMass(), (bool)setting?.solo).ForEach(_a => availableCell.Add(_a));
+      Rule(_currentCell, _chessRules.GetSettingChess(ChessType.Rook)?.direction.ConvertToIntMass(), (bool)setting?.solo).ForEach(_a => availableCell.Add(_a));
 
       return availableCell;
     }
 
-    public List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell){
-      List<Vector2Int> availableCell = new List<Vector2Int>();
+    public List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell){
+      var setting = _chessRules.GetSettingChess(ChessType.Knight);
+      return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
+    }
+    
+    private List<Vector2Int> Rule(Vector2Int _currentCell, int[][] _direction, bool _solo = false){
+      List<Vector2Int> availableCells = new List<Vector2Int>();
 
-      if(_currentCell.x + 2 < IBoardServices.HeightCell && _currentCell.y + 1 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 2, _currentCell.y + 1));
-      
-      if(_currentCell.x - 2 > 0 && _currentCell.y - 1 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 2, _currentCell.y - 1));
-      
-      if(_currentCell.x + 2 < IBoardServices.HeightCell && _currentCell.y - 1 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 2, _currentCell.y - 1));
-      
-      if(_currentCell.x - 2 > 0 && _currentCell.y + 1 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 2, _currentCell.y + 1)); 
-      
-      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y + 2 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y + 2));
-      
-      if(_currentCell.x - 1 > 0 && _currentCell.y - 2 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y - 2));
-      
-      if(_currentCell.x + 1 < IBoardServices.HeightCell && _currentCell.y - 2 > 0) 
-        availableCell.Add(new Vector2Int(_currentCell.x + 1, _currentCell.y - 2));
-      
-      if(_currentCell.x - 1 > 0 && _currentCell.y + 2 < IBoardServices.WidthCell) 
-        availableCell.Add(new Vector2Int(_currentCell.x - 1, _currentCell.y + 2));
+      foreach(var dir in _direction){
+        int x = _currentCell.x + dir[0];
+        int y = _currentCell.y + dir[1];
 
-      return availableCell;
+        while(x is >= 0 and <= IBoardServices.HeightCell && y is >= 0 and <= IBoardServices.WidthCell){
+          availableCells.Add(new Vector2Int(x, y));
+          if(_solo) break;
+          
+          x += dir[0];
+          y += dir[1];
+        }
+      }
+
+      return availableCells;
     }
   }
 }

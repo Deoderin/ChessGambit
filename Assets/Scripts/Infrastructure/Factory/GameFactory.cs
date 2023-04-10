@@ -63,12 +63,17 @@ namespace Infrastructure.Factory{
     }
 
     public void SpawnChess(){
-      Vector2Int startPosition = Vector2Int.zero;
-      ChessType chessType = ChessType.King;
-      
-      var chess = CreateChessPiece(startPosition);
+      SpawnChessSetup(Vector2Int.zero, ChessType.King);      
+      SpawnChessSetup(new Vector2Int(1, 0), ChessType.Bishop);      
+      SpawnChessSetup(new Vector2Int(2, 0), ChessType.Rook);      
+      SpawnChessSetup(new Vector2Int(3, 0), ChessType.Knight);      
+      SpawnChessSetup(new Vector2Int(4, 0), ChessType.Queen);
+    }
+
+    private void SpawnChessSetup(Vector2Int _startPosition, ChessType _chessType){
+      var chess = CreateChessPiece(_startPosition);
       SetupAnimationComponentChess(chess);
-      InitChessSetting(chess, startPosition, chessType);
+      InitChessSetting(chess, _startPosition, _chessType);
     }
 
     private void SetupAnimationComponentChess(GameObject _chess){

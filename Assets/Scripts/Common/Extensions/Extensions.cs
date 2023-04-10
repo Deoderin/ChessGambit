@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Common.Extensions{
   public static class Extensions
@@ -21,6 +23,16 @@ namespace Common.Extensions{
         _apply?.Invoke(_self);
 
       return _self;
+    }
+
+    public static int[][] ConvertToIntMass(this List<Vector2Int> _self){
+      int[][] mass = new int[_self.Count][];
+
+      for(var i = 0; i < _self.Count; i++){
+        mass[i] = new[]{_self[i].x, _self[i].y};
+      }
+
+      return mass;
     }
   }
 }

@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc5708714c045a3aebb027d870df96e, type: 3}
+  m_Name: ChessRule
+  m_EditorClassIdentifier: 
+  chessRules:
+  - chessType: 1
+    solo: 0
+    direction:
+    - {x: 1, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: -1}
+  - chessType: 2
+    solo: 0
+    direction:
+    - {x: 1, y: 1}
+    - {x: 1, y: -1}
+    - {x: -1, y: 1}
+    - {x: -1, y: -1}
+  - chessType: 4
+    solo: 1
+    direction:
+    - {x: 2, y: 1}
+    - {x: 2, y: -1}
+    - {x: -2, y: 1}
+    - {x: -2, y: -1}
+    - {x: 1, y: 2}
+    - {x: 1, y: -2}
+    - {x: -1, y: 2}
+    - {x: -1, y: -2}
+  - chessType: 5
+    solo: 1
+    direction:
+    - {x: 0, y: 1}
+  - chessType: 3
+    solo: 0
+    direction: []
+  - chessType: 0
+    solo: 1
+    direction: []
