@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Services{
   public class GetInteractableObject : IInteractableService{
-    private const string TagName = "Chess";
     private static Camera _camera;
     
     public GameObject InteractableObject(string _target) => GetObjectWithScreen(_target);
