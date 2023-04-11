@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common.Extensions;
 using Data.Setting;
@@ -27,30 +28,7 @@ namespace Infrastructure.Factory{
 
     public List<CellIdentity> GetAvailableCell(Vector2Int _pos, ChessType _type){
       var availableCellObj = new List<CellIdentity>();
-      List<Vector2Int> availableCell = new List<Vector2Int>();
-        
-      switch(_type){
-        case ChessType.King:
-          availableCell = _boardServices.AvailableCellForKing(_pos);
-          break;
-        case ChessType.Rook:
-          availableCell = _boardServices.AvailableCellForRock(_pos);
-          break;
-        case ChessType.Bishop:
-          availableCell = _boardServices.AvailableCellForBishop(_pos);
-          break;
-        case ChessType.Queen:
-          availableCell = _boardServices.AvailableCellForQueen(_pos);
-          break;
-        case ChessType.Knight:
-          availableCell = _boardServices.AvailableCellForKnight(_pos);
-          break;
-        case ChessType.Pawn:
-          availableCell = _boardServices.AvailableCellForPawn(_pos);
-          break;
-      }
-      
-      availableCell.ForEach(_a => availableCellObj.Add(_cells[_a].GetCell()));
+      GetAvailableCellPosition(_pos, _type).ForEach(_a => availableCellObj.Add(_cells[_a].GetCell()));
       return availableCellObj;
     }
 
@@ -74,7 +52,7 @@ namespace Infrastructure.Factory{
     }
 
     private void SpawnChessSetup(Vector2Int _startPosition, ChessType _chessType){
-      var chess = CreateChessPiece(_startPosition);
+      var chess = CreateChessPiece(_startPosition, _chessType);
       SetupAnimationComponentChess(chess);
       InitChessSetting(chess, _startPosition, _chessType);
       SetStatusCell(_startPosition, chess);
@@ -93,9 +71,24 @@ namespace Infrastructure.Factory{
       SetEntityCell(_startPosition).SetChess(_cell.GetComponent<Chess>());
     }
 
-    private GameObject CreateChessPiece(Vector2Int _initialPos) =>
-      _asset.Instantiate(AssetPath.ChessPiecePath, _cells[_initialPos].GetCell().transform.position);
-
+    private List<Vector2Int> GetAvailableCellPosition(Vector2Int _pos, ChessType _type) => _type switch{
+        ChessType.King => _boardServices.AvailableCellForKing(_pos),
+        ChessType.Rook => _boardServices.AvailableCellForRock(_pos),
+        ChessType.Bishop => _boardServices.AvailableCellForBishop(_pos),
+        ChessType.Queen => _boardServices.AvailableCellForQueen(_pos),
+        ChessType.Knight => _boardServices.AvailableCellForKnight(_pos),
+        ChessType.Pawn => _boardServices.AvailableCellForPawn(_pos),
+        _ => null};
+    
+    private GameObject CreateChessPiece(Vector2Int _initialPos, ChessType _type) => _type switch{
+        ChessType.King => _asset.Instantiate(AssetPath.ChessPath.KingPath, _cells[_initialPos].GetCell().transform.position),
+        ChessType.Rook => _asset.Instantiate(AssetPath.ChessPath.RockPath, _cells[_initialPos].GetCell().transform.position),
+        ChessType.Bishop => _asset.Instantiate(AssetPath.ChessPath.BishopPath, _cells[_initialPos].GetCell().transform.position),
+        ChessType.Queen => _asset.Instantiate(AssetPath.ChessPath.QueenPath, _cells[_initialPos].GetCell().transform.position),
+        ChessType.Knight => _asset.Instantiate(AssetPath.ChessPath.KnightPath, _cells[_initialPos].GetCell().transform.position),
+        ChessType.Pawn => _asset.Instantiate(AssetPath.ChessPath.PawnPath, _cells[_initialPos].GetCell().transform.position), 
+        _ => null};
+    
     private void GenerateCells(){
       var cells = _boardServices.InitialCellsColors();
       

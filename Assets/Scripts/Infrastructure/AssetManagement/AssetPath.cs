@@ -4,7 +4,15 @@ namespace Infrastructure.AssetManagement{
     public const string BlackCellPathData = "BlackCell";
     public const string WhiteCellPathData = "WhiteCell";
     public const string ChessRules = "Setting/ChessRule";
-    public const string ChessPiecePath = "GameComponent/ChessPiece";
     public const string SettingAnimationCell = "Setting/CallAnimationSetting";
+
+    public static class ChessPath{
+      public const string KingPath = "GameComponent/King";      
+      public const string PawnPath = "GameComponent/Pawn";      
+      public const string BishopPath = "GameComponent/Bishop";      
+      public const string KnightPath = "GameComponent/Knight";      
+      public const string QueenPath = "GameComponent/Queen";      
+      public const string RockPath = "GameComponent/Rock";
+    }
   }
 }
