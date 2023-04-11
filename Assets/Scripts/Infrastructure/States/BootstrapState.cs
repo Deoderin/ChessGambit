@@ -5,7 +5,6 @@ using Logic;
 using Services;
 using Services.PersistentProgress;
 using Services.PersistentProgress.SaveLoad;
-using UnityEngine;
 
 namespace Infrastructure.States{
   public class BootstrapState : IState{
@@ -35,21 +34,12 @@ namespace Infrastructure.States{
     }
 
     private void RegisterServices(){
-      _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IAsset>(new AssetProvider());
       _services.RegisterSingle<IPersistentProgressServices>(new PersistentProgressServices());
       _services.RegisterSingle<IBoardServices>(new ChessBoardService(AllServices.Container.Single<IAsset>()));
       _services.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAsset>(), AllServices.Container.Single<IBoardServices>()));
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(AllServices.Container.Single<PersistentProgressServices>(), AllServices.Container.Single<IGameFactory>()));
       _services.RegisterSingle<IInteractableService>(new GetInteractableObject());
-    }
-
-    private static IInputService InputService(){
-      if(Application.isEditor){
-        return new InputService();
-      } else{
-        return new InputService();
-      }
     }
   }
 }
