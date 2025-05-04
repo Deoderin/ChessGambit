@@ -13,7 +13,7 @@ namespace GameElements{
     }    
     
     public void SetPosition(Vector2Int _pos){
-      _animator.MoveTo(new Vector3(_pos.x, 0, _pos.y));
+      _animator.MoveTo(new Vector3(_pos.x * 2, 0, _pos.y * 2), ignoreY: true);
     }
   }
 }

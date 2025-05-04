@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8227ca06a243044686beb835bffa192, type: 3}
+  m_Name: Level_2
+  m_EditorClassIdentifier: 
+  levelId: Level_2
+  displayName: "\u041F\u0435\u0448\u043A\u0430"
+  playerFigures:
+  - type: 3
+    position: {x: 4, y: 0}
+    isKillObjective: 0
+  enemyFigures:
+  - type: 5
+    position: {x: 4, y: 6}
+    isKillObjective: 0
+  - type: 1
+    position: {x: 4, y: 5}
+    isKillObjective: 1
+  - type: 0
+    position: {x: 2, y: 2}
+    isKillObjective: 1
+  hasBoss: 0
+  bossType: 0
+  bossPosition: {x: 4, y: 7}
+  goal: 0
+  surviveTurns: 0
+  obstacles: []
+  goalCells: []

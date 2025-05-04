@@ -8,6 +8,6 @@ namespace Infrastructure.States{
     }
     
     public interface IPayloadedState<TPayload> : IExitableState{
-        void Enter(TPayload _payload);
+        void Enter(TPayload sceneName);
     }
 }

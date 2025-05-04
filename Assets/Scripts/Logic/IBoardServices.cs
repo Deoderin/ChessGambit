@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameElements;
 using Infrastructure.Services;
 using UnityEngine;
 
@@ -13,5 +14,6 @@ namespace Logic{
     List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell);
     List<Vector2Int> AvailableCellForQueen(Vector2Int _currentCell);
     List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell);
+    List<Vector2Int> AvailableCellForChess(Chess chess);
   }
 }

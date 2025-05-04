@@ -61,11 +61,86 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ddda65c1c1654147bbbdbdfcdb4881f, type: 3}
+--- !u!1 &2199967941263442432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1353652469814562, guid: 9ddda65c1c1654147bbbdbdfcdb4881f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2198623085108500258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2201213588585601252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4323368450248646, guid: 9ddda65c1c1654147bbbdbdfcdb4881f,
     type: 3}
   m_PrefabInstance: {fileID: 2198623085108500258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6201075396090331750
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5987137590436592800}
+    m_Modifications:
+    - target: {fileID: 1239270685352430, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_Name
+      value: Black Stone Bishop
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c77f218d9ab1f424384acc3b86c56de1, type: 3}
+--- !u!1 &6199981330753266568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1239270685352430, guid: c77f218d9ab1f424384acc3b86c56de1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6201075396090331750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6205685526261457940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4964487031023218, guid: c77f218d9ab1f424384acc3b86c56de1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6201075396090331750}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8884868982318364902
 PrefabInstance:
@@ -135,6 +210,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bishop
       objectReference: {fileID: 0}
+    - target: {fileID: 8541322514165657369, guid: d486dcb3eda78f1418dc854e4553c0d0,
+        type: 3}
+      propertyPath: _blackChessObject
+      value: 
+      objectReference: {fileID: 6199981330753266568}
+    - target: {fileID: 8541322514165657369, guid: d486dcb3eda78f1418dc854e4553c0d0,
+        type: 3}
+      propertyPath: _whiteChessObject
+      value: 
+      objectReference: {fileID: 2199967941263442432}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -142,6 +227,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2201213588585601252}
+    - targetCorrespondingSourceObject: {fileID: 2908182594072118342, guid: d486dcb3eda78f1418dc854e4553c0d0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6205685526261457940}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d486dcb3eda78f1418dc854e4553c0d0, type: 3}
 --- !u!4 &5987137590436592800 stripped

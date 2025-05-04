@@ -2,21 +2,26 @@ using Data.Setting;
 using DG.Tweening;
 using UnityEngine;
 
-namespace GameElements{
-  public class AnimationChess : MonoBehaviour{
+namespace GameElements
+{
+  public class AnimationChess : MonoBehaviour
+  {
     private ChessAnimationSetting _animSetting;
     public SpawnAnimationChessPiece typeSpawnAnimation;
-    public Ease baseEase;    
+    public Ease baseEase;
     public Ease easeForStartUpAnimation;
     public float startupTime;
     public float timeAnimation;
-    
-    public void SetDataSetting(ChessAnimationSetting _setting){
+
+    public void SetDataSetting(ChessAnimationSetting _setting)
+    {
       _animSetting = _setting;
     }
 
-    public void StartupAnimation(){
-      switch(typeSpawnAnimation){
+    public void StartupAnimation()
+    {
+      switch (typeSpawnAnimation)
+      {
         case SpawnAnimationChessPiece.DropDown:
           DropDownAnimation();
           break;
@@ -30,50 +35,62 @@ namespace GameElements{
       }
     }
 
-    private void DropDownAnimation(){
+    private void DropDownAnimation()
+    {
       float offsetY = 60;
       float basePosY = transform.position.y;
-      
+
       transform.position = new Vector3(transform.position.x, transform.position.y + offsetY, transform.position.z);
       transform.DOMoveY(basePosY, startupTime).SetEase(easeForStartUpAnimation);
     }
 
-    private void ScaleUpAnimation(){
+    private void ScaleUpAnimation()
+    {
       transform.localScale = Vector3.zero;
       transform.DOScale(Vector3.one, startupTime).SetEase(easeForStartUpAnimation);
     }
 
-    public void SelectedFigure(){
+    public void SelectedFigure()
+    {
 
     }
 
-    private void SelectedAnimationStarted(){
+    private void SelectedAnimationStarted()
+    {
+
+    }
+
+    private void SelectedAnimationEnd()
+    {
+
+    }
+
+    public void MoveTo(Vector3 pos, bool ignoreY = false)
+    {
+      BasicMove(pos, ignoreY);
+    }
+
+    private void BasicMove(Vector3 pos, bool ignoreY = false)
+    {
+      if (ignoreY)
+        pos.y = transform.position.y;
       
-    }
-
-    private void SelectedAnimationEnd(){
-      
-    }
-
-    public void MoveTo(Vector3 pos){
-      BasicMove(pos);
-    }
-
-    private void BasicMove(Vector3 pos){
       float jumpPower = 1;
-      
+
       transform.DOMove(pos, timeAnimation).SetEase(baseEase);
-      transform.DOJump(pos,jumpPower, 1, timeAnimation).SetEase(baseEase);
+      transform.DOJump(pos, jumpPower, 1, timeAnimation).SetEase(baseEase);
     }
 
-    private void JumpingMove(Vector3 _pos, int _numJump){
+    private void JumpingMove(Vector3 _pos, int _numJump)
+    {
       float jumpPower = 1;
-      
-      transform.DOJump(_pos,jumpPower, _numJump, timeAnimation).SetEase(baseEase);
+
+      transform.DOJump(_pos, jumpPower, _numJump, timeAnimation).SetEase(baseEase);
     }
   }
 
-  public enum SpawnAnimationChessPiece{
+  public enum SpawnAnimationChessPiece
+  {
     DropDown,
     ScaleUpOnSpot,
     AllTypesAnimation
