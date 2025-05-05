@@ -49,6 +49,8 @@ namespace Infrastructure.States
       _services.RegisterSingle<IInteractableService>(new GetInteractableObject());
       _services.RegisterSingle<IGoalTriggerService>(new GoalTriggerService(AllServices.Container.Single<IGameFactory>()));
       _services.RegisterSingle<ITurnService>(new TurnService());
+      _services.RegisterSingle<ICombatService>(new CombatService(AllServices.Container.Single<IGameFactory>()));
+      _services.RegisterSingle<ISelectionService>(new SelectionService());
     }
   }
 }

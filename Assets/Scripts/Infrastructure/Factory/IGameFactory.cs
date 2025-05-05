@@ -12,7 +12,7 @@ namespace Infrastructure.Factory{
     List<ISaveProgressReader> ProgressReaders{get;}
     List<ISaveProgress> ProgressesWriters{get;}
     Dictionary<Vector2Int, CellEntity> GetAllCells { get; }
-    List<CellIdentity> GetAvailableCell(Vector2Int _pos, ChessType _type);
+    public List<CellIdentity> GetAvailableCell(Vector2Int _pos, ChessType _type);
 
     void Cleanup();
     void CreateMatrixCell();

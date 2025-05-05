@@ -37,27 +37,27 @@ namespace Logic{
       return cellBoard;
     }
 
-    public List<Vector2Int> AvailableCellForPawn(Vector2Int _currentCell)
+    public List<AvailableCellInfo> AvailableCellForPawn(Vector2Int _currentCell)
     {
       var setting = _chessRules.GetSettingChess(ChessType.Pawn);
       return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
-    public List<Vector2Int> AvailableCellForBishop(Vector2Int _currentCell)
+    public List<AvailableCellInfo> AvailableCellForBishop(Vector2Int _currentCell)
     {
       var setting = _chessRules.GetSettingChess(ChessType.Bishop);
       return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
-    public List<Vector2Int> AvailableCellForRock(Vector2Int _currentCell)
+    public List<AvailableCellInfo> AvailableCellForRock(Vector2Int _currentCell)
     {
       var setting = _chessRules.GetSettingChess(ChessType.Rook);
       return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
-    public List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell)
+    public List<AvailableCellInfo> AvailableCellForKing(Vector2Int _currentCell)
     {
-      List<Vector2Int> availableCell = new List<Vector2Int>();
+      List<AvailableCellInfo> availableCell = new List<AvailableCellInfo>();
       var setting = _chessRules.GetSettingChess(ChessType.King);
 
       Rule(_currentCell, _chessRules.GetSettingChess(ChessType.Bishop)?.direction.ConvertToIntMass(),
@@ -68,7 +68,7 @@ namespace Logic{
       return availableCell;
     }
 
-    public List<Vector2Int> AvailableCellForChess(Chess chess)
+    public List<AvailableCellInfo> AvailableCellForChess(Chess chess)
     {
       return chess.ChessType switch
       {
@@ -78,13 +78,13 @@ namespace Logic{
         ChessType.Queen => AvailableCellForQueen(chess.PositionOnBoard),
         ChessType.Knight => AvailableCellForKnight(chess.PositionOnBoard),
         ChessType.Pawn => AvailableCellForPawn(chess.PositionOnBoard),
-        _ => new List<Vector2Int>()
+        _ => new List<AvailableCellInfo>()
       };
     }
 
-    public List<Vector2Int> AvailableCellForQueen(Vector2Int _currentCell)
+    public List<AvailableCellInfo> AvailableCellForQueen(Vector2Int _currentCell)
     {
-      List<Vector2Int> availableCell = new List<Vector2Int>();
+      List<AvailableCellInfo> availableCell = new List<AvailableCellInfo>();
       var setting = _chessRules.GetSettingChess(ChessType.Queen);
 
       Rule(_currentCell, _chessRules.GetSettingChess(ChessType.Bishop)?.direction.ConvertToIntMass(),
@@ -95,28 +95,50 @@ namespace Logic{
       return availableCell;
     }
 
-    public List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell)
+    public List<AvailableCellInfo> AvailableCellForKnight(Vector2Int _currentCell)
     {
       var setting = _chessRules.GetSettingChess(ChessType.Knight);
       return Rule(_currentCell, setting?.direction.ConvertToIntMass(), (bool)setting?.solo);
     }
 
-    private List<Vector2Int> Rule(Vector2Int _currentCell, int[][] _direction, bool _solo = false)
+    private List<AvailableCellInfo> Rule(Vector2Int _currentCell, int[][] _direction, bool _solo = false)
     {
-      List<Vector2Int> availableCells = new List<Vector2Int>();
+      List<AvailableCellInfo> availableCells = new();
 
+      var factory = AllServices.Container.Single<IGameFactory>();
+      var selected = AllServices.Container.Single<ISelectionService>().Selected;
+      
+      if (selected == null)
+        return availableCells;
+      
       foreach (var dir in _direction)
       {
         int x = _currentCell.x + dir[0];
         int y = _currentCell.y + dir[1];
 
-        while (x is >= 0 and <= IBoardServices.HeightCell && y is >= 0 and <= IBoardServices.WidthCell)
+        while (x is >= 0 and < IBoardServices.HeightCell && y is >= 0 and < IBoardServices.WidthCell)
         {
           var pos = new Vector2Int(x, y);
+          var cell = factory.GetStatusCell(pos);
+          
+          if (cell.ThereAreObstacles())
+          {
+            availableCells.Add(new AvailableCellInfo(pos, CellOccupantType.Obstacle));
+            break;
+          }
+          
+          if (cell.ThereChess())
+          {
+            var target = cell.GetChess();
+            var type = target.Side == selected.Side ? CellOccupantType.Ally : CellOccupantType.Enemy;
+            availableCells.Add(new AvailableCellInfo(pos, type));
+            break;
+          }
+          
+          availableCells.Add(new AvailableCellInfo(pos, CellOccupantType.Empty));
 
-          if (ObstacleDetected(pos)) break;
-          availableCells.Add(pos);
-          if (_solo) break;
+          if (_solo)
+            break;
 
           x += dir[0];
           y += dir[1];
@@ -124,13 +146,6 @@ namespace Logic{
       }
 
       return availableCells;
-    }
-
-
-    private bool ObstacleDetected(Vector2Int _pos)
-    {
-      var cell = AllServices.Container.Single<IGameFactory>().GetStatusCell(_pos);
-      return cell.ThereChess() || cell.ThereAreObstacles();
     }
   }
 }

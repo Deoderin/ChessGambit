@@ -2,6 +2,7 @@ using GameElements;
 using Infrastructure.Factory;
 using Infrastructure.Services;
 using Logic;
+using Services;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -12,6 +13,7 @@ namespace Infrastructure.States
         
         private readonly IGameFactory _factory = AllServices.Container.Single<IGameFactory>();
         private readonly IBoardServices _board = AllServices.Container.Single<IBoardServices>();
+        private readonly ISelectionService _selectionService = AllServices.Container.Single<ISelectionService>();
 
         public void Enter(GameLoopState.TurnStateMachine machine)
         {
@@ -30,25 +32,41 @@ namespace Infrastructure.States
         {
             var factory = AllServices.Container.Single<IGameFactory>();
             var board = AllServices.Container.Single<IBoardServices>();
+            var combat = AllServices.Container.Single<ICombatService>();
 
-            foreach (var cellEnemy in factory.GetAllCells)
+            foreach (var kv in factory.GetAllCells)
             {
-                var fromCell = cellEnemy.Value;
+                var cell = kv.Value;
+                if (!cell.ThereChess()) continue;
 
-                if (!fromCell.ThereChess()) continue;
-
-                var chess = fromCell.GetChess();
+                var chess = cell.GetChess();
                 if (chess.Side != ColorSide.Black) continue;
-                
-                
-                var targets = board.AvailableCellForChess(chess);
-                if (targets.Count == 0) continue;
 
-                var toPos = targets[0];
+                var available = board.AvailableCellForChess(chess);
 
-                MoveEnemy(chess, toPos);
-
-                break;
+                foreach (var info in available)
+                {
+                    var entity = factory.GetEntityInCell(info.Position);
+                    
+                    if (entity.GetChess())
+                    {
+                        var target = entity.GetChess();
+                        if (target.Side == ColorSide.White)
+                        {
+                            combat.Attack(chess, target);
+                            return;
+                        }
+                    }
+                    
+                    if (!entity.GetChess() && !entity.GetObstacle())
+                    {
+                        factory.SetEntityCell(chess.PositionOnBoard).SetChess(null);
+                        chess.PositionOnBoard = info.Position;
+                        factory.SetEntityCell(info.Position).SetChess(chess);
+                        chess.GetComponent<ChessMover>().SetPosition(info.Position);
+                        return;
+                    }
+                }
             }
         }
         

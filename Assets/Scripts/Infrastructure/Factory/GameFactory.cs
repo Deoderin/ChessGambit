@@ -35,7 +35,13 @@ namespace Infrastructure.Factory
     public List<CellIdentity> GetAvailableCell(Vector2Int _pos, ChessType _type)
     {
       var availableCellObj = new List<CellIdentity>();
-      GetAvailableCellPosition(_pos, _type).ForEach(_a => availableCellObj.Add(_cells[_a].GetCell()));
+      foreach (var a in GetAvailableCellPosition(_pos, _type))
+      {
+        if (a.OccupantType == CellOccupantType.Enemy || a.OccupantType == CellOccupantType.Empty)
+        {
+          availableCellObj.Add(_cells[a.Position].GetCell()); 
+        }
+      }
       return availableCellObj;
     }
 
@@ -78,6 +84,7 @@ namespace Infrastructure.Factory
       foreach (var figure in data.enemyFigures)
       {
         var enemyGO = CreateChessPiece(figure.position, figure.type);
+        
         SetupAnimationComponentChess(enemyGO);
         InitChessSetting(enemyGO, figure.position, figure.type, ColorSide.Black);
         SetStatusCell(figure.position, enemyGO);
@@ -165,7 +172,7 @@ namespace Infrastructure.Factory
       SetEntityCell(_startPosition).SetChess(_cell.GetComponent<Chess>());
     }
 
-    private List<Vector2Int> GetAvailableCellPosition(Vector2Int _pos, ChessType _type) => _type switch
+    private List<AvailableCellInfo> GetAvailableCellPosition(Vector2Int _pos, ChessType _type) => _type switch
     {
       ChessType.King => _boardServices.AvailableCellForKing(_pos),
       ChessType.Rook => _boardServices.AvailableCellForRock(_pos),

@@ -8,12 +8,12 @@ namespace Logic{
     const int HeightCell = 7;
     const int WidthCell = 7;
     int[,] InitialCellsColors();
-    List<Vector2Int> AvailableCellForPawn(Vector2Int _currentCell);
-    List<Vector2Int> AvailableCellForBishop(Vector2Int _currentCell);
-    List<Vector2Int> AvailableCellForRock(Vector2Int _currentCell);
-    List<Vector2Int> AvailableCellForKnight(Vector2Int _currentCell);
-    List<Vector2Int> AvailableCellForQueen(Vector2Int _currentCell);
-    List<Vector2Int> AvailableCellForKing(Vector2Int _currentCell);
-    List<Vector2Int> AvailableCellForChess(Chess chess);
+    List<AvailableCellInfo> AvailableCellForPawn(Vector2Int _currentCell);
+    List<AvailableCellInfo> AvailableCellForBishop(Vector2Int _currentCell);
+    List<AvailableCellInfo> AvailableCellForRock(Vector2Int _currentCell);
+    List<AvailableCellInfo> AvailableCellForKnight(Vector2Int _currentCell);
+    List<AvailableCellInfo> AvailableCellForQueen(Vector2Int _currentCell);
+    List<AvailableCellInfo> AvailableCellForKing(Vector2Int _currentCell);
+    List<AvailableCellInfo> AvailableCellForChess(Chess chess);
   }
 }
